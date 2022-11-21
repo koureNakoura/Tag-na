@@ -2,18 +2,27 @@
 
 namespace App\Controller\Admin;
 
-use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
-use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
-use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
+use App\Entity\Member;
+use App\Entity\Tender;
+use App\Entity\Article;
+use App\Entity\Project;
 use Symfony\Component\HttpFoundation\Response;
+use App\Controller\Admin\ProjectCrudController;
 use Symfony\Component\Routing\Annotation\Route;
+use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
+use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
+use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 
 class DashboardController extends AbstractDashboardController
 {
     #[Route('/admin', name: 'admin')]
     public function index(): Response
     {
-        return parent::index();
+        $routeBuilder = $this->container->get(AdminUrlGenerator::class);
+        $url = $routeBuilder->setController(ProjectCrudController::class)->generateUrl();
+
+        return $this->redirect($url);
 
         // Option 1. You can make your dashboard redirect to some common page of your backend
         //
@@ -40,7 +49,18 @@ class DashboardController extends AbstractDashboardController
 
     public function configureMenuItems(): iterable
     {
-        yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
-        // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);
+        //yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
+        //yield MenuItem::linkToLogout('Déconnexion', 'fa fa-sign-out');
+        
+       // yield MenuItem::section('Utilisateurs');
+       // yield MenuItem::linkToCrud('Membres', 'fa fa-user', Member::class);
+       // yield MenuItem::linkToCrud('Article', 'fa fa-edit-book', Article::class);
+       // yield MenuItem::linkToCrud('Appels d\'offre', 'fa fa-list', Tender::class);
+       // yield MenuItem::linkToCrud('Les Projets', 'fa fa-list', Project::class);
+       yield MenuItem::linktoRoute('Retour Accueil', 'fas fa-home', 'app_home');
+      
+        yield MenuItem::linkToCrud('Article', 'fa fa-edit', Article::class);
+        yield MenuItem::linkToCrud('Appels d\'offre', 'fa fa-list', Tender::class);
+        yield MenuItem::linkToCrud('Les Projets', 'fa fa-list', Project::class);
     }
 }

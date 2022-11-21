@@ -7,6 +7,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ProjectRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Project
 {
     #[ORM\Id]
@@ -25,6 +26,9 @@ class Project
 
     #[ORM\Column]
     private ?\DateTimeImmutable $created_at = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $slug = null;
 
     public function getId(): ?int
     {
@@ -71,10 +75,27 @@ class Project
     {
         return $this->created_at;
     }
+    #[ORM\PrePersist]
+       public function setCreatedAtValue()
+       {
+           $this->created_at = new \DateTimeImmutable();
+    }
 
     public function setCreatedAt(\DateTimeImmutable $created_at): self
     {
         $this->created_at = $created_at;
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
 
         return $this;
     }

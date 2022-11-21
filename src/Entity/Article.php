@@ -23,12 +23,14 @@ class Article
     #[ORM\Column(type: Types::TEXT)]
     private ?string $content = null;
 
-    #[ORM\ManyToOne(inversedBy: 'articles')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Member $author = null;
-
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updated_at = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $slug = null;
+
+    #[ORM\Column]
+    private ?\DateTimeImmutable $created_at = null;
 
     public function getId(): ?int
     {
@@ -71,18 +73,6 @@ class Article
         return $this;
     }
 
-    public function getAuthor(): ?Member
-    {
-        return $this->author;
-    }
-
-    public function setAuthor(?Member $author): self
-    {
-        $this->author = $author;
-
-        return $this;
-    }
-
     public function getUpdatedAt(): ?\DateTimeImmutable
     {
         return $this->updated_at;
@@ -91,6 +81,41 @@ class Article
     public function setUpdatedAt(?\DateTimeImmutable $updated_at): self
     {
         $this->updated_at = $updated_at;
+
+        return $this;
+    }
+
+    #[ORM\PrePersist]
+    public function setCreatedAtValue()
+    {
+        $this->created_at = new \DateTimeImmutable();
+    }
+
+    public function __toString(): string
+    {
+        return (string) $this->getTitle();
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->created_at;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $created_at): self
+    {
+        $this->created_at = $created_at;
 
         return $this;
     }
