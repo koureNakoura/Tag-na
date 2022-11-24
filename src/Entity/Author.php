@@ -2,25 +2,21 @@
 
 namespace App\Entity;
 
-use App\Entity\User;
+use App\Repository\AuthorRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use App\Repository\AuthorRepository;
-use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 #[ORM\Entity(repositoryClass: AuthorRepository::class)]
 #[UniqueEntity(fields: ['email'], message: 'Un compte avec cette adresse email existe déjà.')]
 class Author extends User
 {
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
-
-    #[ORM\Column]
-    private array $roles = [];
+    #[ORM\Column(type: 'integer')]
+    protected $id;
  
     #[ORM\Column(length: 255)]
     private ?string $firstName = null;
@@ -40,39 +36,6 @@ class Author extends User
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-
-    
-    /**
-     * @see UserInterface
-     */
-    public function getRoles(): array
-    {
-        $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_AUTHOR';
-
-        return array_unique($roles);
-    }
-
-    public function setRoles(array $roles): self
-    {
-        $this->roles = $roles;
-
-        return $this;
-    }
-
-    public function getIsApproved(): ?bool
-    {
-        return $this->isApproved;
-    }
-
-    public function setIsApproved(bool $isApproved): self
-    {
-        $this->isApproved = $isApproved;
-
-        return $this;
     }
 
     public function getFirstName(): ?string
@@ -121,5 +84,29 @@ class Author extends User
         $this->profilePicture = $profilePicture;
 
         return $this;
+    }
+
+    public function getIsApproved(): ?bool
+    {
+        return $this->isApproved;
+    }
+
+    public function setIsApproved(bool $isApproved): self
+    {
+        $this->isApproved = $isApproved;
+
+        return $this;
+    }
+
+    public function __construct(array $roles = ['ROLE_AUTHOR'])
+    {
+        parent::__construct($roles);
+        $this->courses = new ArrayCollection();
+    }
+
+    
+    public function __toString(): string
+    {
+        return $this->getFirstName().' '.$this->getLastName();
     }
 }

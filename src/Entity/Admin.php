@@ -20,29 +20,8 @@ class Admin extends User
         return $this->id;
     }
 
-    /**
-     * @see UserInterface
-     */
-    public function getRoles(): array
+    public function __construct(array $roles = ['ROLE_ADMIN'])
     {
-        $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_ADMIN';
-
-        return array_unique($roles);
-    }
-
-    public function setRoles(array $roles): self
-    {
-        $this->roles = $roles;
-
-        return $this;
-    }
-
-
-    public function __toString(): string
-    {
-       // return $this->getEmail();
-        return (string) $this->getEmail();
+        parent::__construct($roles);
     }
 }

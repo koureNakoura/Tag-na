@@ -119,4 +119,10 @@ class Article
 
         return $this;
     }
+
+    public function __construct()
+    {
+        $this->setCreatedAt(new \DateTimeImmutable());
+   
+    }
 }

@@ -36,10 +36,14 @@ class Member
     #[ORM\OneToMany(mappedBy: 'author', targetEntity: Article::class, orphanRemoval: true)]
     private Collection $articles;
 
-    public function __construct()
-    {
-        $this->articles = new ArrayCollection();
-    }
+    #[ORM\Column(length: 255)]
+    private ?string $quality = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $faceBookProfile = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $tweeterProfile = null;
 
     public function getId(): ?int
     {
@@ -121,5 +125,46 @@ class Member
     public function __toString(): string
     {
         return $this->getFirstName().' '.$this->getLastName();
+    }
+
+    public function getQuality(): ?string
+    {
+        return $this->quality;
+    }
+
+    public function setQuality(string $quality): self
+    {
+        $this->quality = $quality;
+
+        return $this;
+    }
+
+    public function getFaceBookProfile(): ?string
+    {
+        return $this->faceBookProfile;
+    }
+
+    public function setFaceBookProfile(?string $faceBookProfile): self
+    {
+        $this->faceBookProfile = $faceBookProfile;
+
+        return $this;
+    }
+
+    public function getTweeterProfile(): ?string
+    {
+        return $this->tweeterProfile;
+    }
+
+    public function setTweeterProfile(?string $tweeterProfile): self
+    {
+        $this->tweeterProfile = $tweeterProfile;
+
+        return $this;
+    }
+    public function __construct()
+    {
+        $this->setCreatedAt(new \DateTimeImmutable());
+   
     }
 }
