@@ -10,6 +10,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 
 class ArticleCrudController extends AbstractCrudController
 {
@@ -32,6 +33,7 @@ class ArticleCrudController extends AbstractCrudController
            
             TextField::new('title', 'Titre'),
             SlugField::new('slug')->setTargetFieldName('title'),
+            AssociationField::new('categories', 'Catégorie de l\'article'),
             ImageField::new('photo','Image')
                ->setUploadDir('/public/uploads/blog_pictures')
                ->setBasePath('/uploads/blog_pictures')

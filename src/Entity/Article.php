@@ -2,9 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\ArticleRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\ArticleRepository;
+use EsperoSoft\DateFormat\DateFormat;
 
 #[ORM\Entity(repositoryClass: ArticleRepository::class)]
 class Article
@@ -31,6 +34,14 @@ class Article
 
     #[ORM\Column]
     private ?\DateTimeImmutable $created_at = null;
+
+    private string $fromNow;
+
+    #[ORM\ManyToMany(targetEntity: Category::class, mappedBy: 'articles')]
+    private Collection $categories;
+
+    #[ORM\ManyToOne(inversedBy: 'articles')]
+    private ?User $author = null;
 
     public function getId(): ?int
     {
@@ -123,6 +134,54 @@ class Article
     public function __construct()
     {
         $this->setCreatedAt(new \DateTimeImmutable());
+        $this->categories = new ArrayCollection();
    
+    }
+
+    /**
+     * Get the value of fromNow
+     */ 
+    public function getFromNow()
+    {
+        return DateFormat::fromNow($this->created_at, "fr-FR");
+    }
+
+    /**
+     * @return Collection<int, Category>
+     */
+    public function getCategories(): Collection
+    {
+        return $this->categories;
+    }
+
+    public function addCategory(Category $category): self
+    {
+        if (!$this->categories->contains($category)) {
+            $this->categories->add($category);
+            $category->addArticle($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCategory(Category $category): self
+    {
+        if ($this->categories->removeElement($category)) {
+            $category->removeArticle($this);
+        }
+
+        return $this;
+    }
+
+    public function getAuthor(): ?User
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(?User $author): self
+    {
+        $this->author = $author;
+
+        return $this;
     }
 }

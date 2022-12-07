@@ -1,43 +1,101 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="{% block metaDescription %}{% endblock %}">
-        <meta name="google-site-verification" content="" />
 
-        <title>{% block title %}Taggast{% endblock %}</title>
-        <link rel="icon" href="{{ asset('public/favicon.ico') }}">
-        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
-        {% block stylesheets %}
-            <!-- Bootstrap CSS -->
-        <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-        <!-- Bootstrap Icons -->
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
-        <!-- Google Fonts -->
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Hind+Madurai:wght@300;500;700&family=Montserrat:ital,wght@0,300;0,500;0,800;1,300;1,500;1,800&display=swap" rel="stylesheet">
-        <!-- CSS Stylesheet -->
-        <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-        {% endblock %}
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+    {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+    {% block stylesheets %}
+    {{ encore_entry_link_tags('app') }}
+    <link rel="stylesheet" href="/_assets/css/main.css">
+    {% endblock %}
 
-       
-    </head>
-    <body>
-        <!-- ======= Header ======= -->
-        {% include('_partials/_navbar.html.twig') %}
+    {% block javascripts %}
+    {{ encore_entry_script_tags('app') }}
+    {% endblock %}
+</head>
 
+<body>
+    <header>
+        <a href="/">
+            <h2>Blog</h2>
+        </a>
+        <nav>
+            <ul class="nav-bar flex aic">
+                <li class="nav-item"><a href="">About</a></li>
+                <li class="nav-item down"><a href="#">Categories</a>
+                    <ul class="nav-bar">
+                       
+                       {# <li class="nav-item"><a href="">Category 2</a></li>
+                        <li class="nav-item"><a href="">Category 3</a></li>#}
+                    </ul>
+                </li>
+                <li class="nav-item"><a href="">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    {% block slider %}{% endblock %}
+    <div class="container">
         {% block body %}{% endblock %}
 
+    </div>
+    <footer>
+        <div class="container">
+            <div class="footer-content flex wrap">
+                <div class="footer-content-item flex-1 b">
+                    <h2>Blog</h2>
+                    <p>Site d'informations et d'actualités sur tous les sujets relatifs à l'informatique,
+                        l'economie, la situation dans le monde, etc...
+                    </p>
+                </div>
+                <div class="footer-content-item flex-1 b">
+                    <h2>Mentions légales</h2>
+                    <ul>
+                        <li><a href="">Condition d'utilisation</a></li>
+                        <li><a href="">Condition de ventes</a></li>
+                        <li><a href="">Condition de publication</a></li>
+                    </ul>
+                </div>
+                <div class="footer-content-item flex-1 b">
+                    <h2>Formations gratuites</h2>
+                    <ul>
+                        <li>
+                            <a
+                                href="https://free.mudey.fr/programme/apprendre-les-bases-indispensables-du-langage-html-5"
+                                target="_blank">
+                                Les bases HTML 5
+                            </a>
+                        </li>
+                        <li>
+                            <a
+                                href="https://free.mudey.fr/programme/apprendre-les-bases-indispensables-du-langage-css-3"
+                                target="_blank">
+                                Les bases CSS 3</a>
+                        </li>
+                        <li>
+                            <a
+                                href="https://free.mudey.fr/programme/apprendre-les-bases-indispensables-du-langages-javascript"
+                                target="_blank">
+                                Les bases JavaScript</a>
+                        </li>
+                        <li>
+                            <a href="https://free.mudey.fr/programme/les-bases-indispensables-du-langage-php"
+                            target="_blank">
+                                Les bases PHP</a>
+                        </li>
+                        <li>
+                            <a href="https://mudey.fr/programme/formation-complete-developpeur-web-full-stack"
+                            target="_blank">
+                                Devenir Expert du Web</a>
+                        </li>
 
-        {% block javascripts %}
-        <!-- Bootstrap Bundle with Popper -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/gsap.min.js" integrity="sha512-gmwBmiTVER57N3jYS3LinA9eb8aHrJua5iQD7yqYCKa5x6Jjc7VDVaEA0je0Lu0bP9j7tEjV3+1qUm6loO99Kw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-        {% endblock %}
-    </body>
-    
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+
 </html>
