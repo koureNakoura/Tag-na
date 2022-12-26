@@ -99,4 +99,10 @@ class Project
 
         return $this;
     }
+
+    public function __construct()
+    {
+        $this->setCreatedAt(new \DateTimeImmutable());
+       
+    }
 }

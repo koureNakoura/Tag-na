@@ -3,7 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\User;
-use App\Entity\Adress;
+use App\Entity\Address;
 use App\Entity\Article;
 use App\Entity\Profile;
 use App\Entity\Category;
@@ -41,7 +41,7 @@ class ArticleFixtures extends Fixture
        //                         //->setCreatedAt($faker->dateTimeImmutable())
        //                         ->setPassword($this->passwordHasherFactory->getPasswordHasher(User::class)->hash('123456', null));
        //     ;
-       //     $address = (new Adress())//->setStreet($faker->streetAddress())
+       //     $address = (new Address())//->setStreet($faker->streetAddress())
        //                              // ->setCodePostal($faker->codepostal())
        //                               ->setCity($faker->city())
        //                               ->setCountry($faker->country())
@@ -52,7 +52,7 @@ class ArticleFixtures extends Fixture
        //                               ->setDescription($faker->text(60))
        //                               ->setCreatedAt($faker->dateTimeImmutable())
        //     ;
-       //     $user->addAdress($address);
+       //     $user->addAddress($address);
        //     $user->setProfile($profile);
        //     $users[] = $user;
        //     $manager->persist($address);

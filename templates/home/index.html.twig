@@ -5,9 +5,9 @@
 {% block slider %}
     <div class="slider">
         <div class="slider-content">
-            <h2>Bienvenue sur le blog Jstore</h2>
-            <p>Plusieurs articles publiés chaque jour !</p>
-            <a href="https://mudey.fr/programme/formation-complete-developpeur-web-full-stack" target="_blank">
+            <h2>Bienvenue sur le Portail de l'ONG TAGGAST</h2>
+            <p>FORMATION-EMPLOI-AUTONOMISATION</p>
+            <a href="#" target="_blank">
                 <button class="btn">consulter</button>
                 
             </a>
@@ -16,28 +16,147 @@
 {% endblock %}
 
 {% block body %}
-    <div class="articles-infos">
-        <strong>{{articles | length}}</strong> articles retrouvés
+
+<!-- ======= Domains Section ======= -->
+<section id="services" class="services section-bg">
+    <div class="container">
+
+      <div class="row">
+        <div class="col-lg-4">
+          <div class="section-title" data-aos="fade-right">
+            <h2>domaines</h2>
+            <p>Magnam dolores commodi suscipit nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
+          </div>
+        </div>
+        <div class="col-lg-8">
+          <div class="row">
+            <div class="col-md-6 d-flex align-items-stretch">
+              <div class="icon-box" data-aos="zoom-in" data-aos-delay="100">
+                <div class="icon"><i class="bi bi-tools"></i></div>
+                <h4><a href="">Formation professionnelle</a></h4>
+                <p>Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi</p>
+              </div>
+            </div>
+
+            <div class="col-md-6 d-flex align-items-stretch mt-4 mt-lg-0">
+              <div class="icon-box" data-aos="zoom-in" data-aos-delay="200">
+                <div class="icon"><i class="bx bx-file"></i></div>
+                <h4><a href="">Emploi des jeunes</a></h4>
+                <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore</p>
+              </div>
+            </div>
+
+            <div class="col-md-6 d-flex align-items-stretch mt-4">
+              <div class="icon-box" data-aos="zoom-in" data-aos-delay="300">
+                <div class="icon"><i class="fa-light fa-venus"></i></div>
+                <h4><a href="">Autonomisation de la femme</a></h4>
+                <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia</p>
+              </div>
+            </div>
+
+            <div class="col-md-6 d-flex align-items-stretch mt-4">
+              <div class="icon-box" data-aos="zoom-in" data-aos-delay="400">
+                <div class="icon"><i class="bx bx-world"></i></div>
+                <h4><a href="">Santé &amp; Environnement </a></h4>
+                <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
     </div>
-    <div class="articles">
-        {% for article in articles %}
-            <a href="/article/{{article.slug}}" class="article-item">
-                <div class="article-image">
-                    <img  src="{{ asset('uploads/blog_pictures/' ~ article.photo) }}"  alt="Image de l'aricle : {{ article.title }}">
-                </div>
-                <div class="article-details flex">
-                    <div class="article-author-details">
-                        <div class="article-author-picture">
-                            
+  </section><!-- End Services Section -->
+ 
+    <hr>
+   <!-- ======= Articles Section ======= -->
+    <section id="article" class="services section-bg">
+        <div class="container">
+            <div class="section-title">
+                <h2>nos activités</h2>
+            </div>
+            <div class="articles">
+                        {% for article in articles %}
+                        <a href="/article/{{article.slug}}" class="article-item animate__fadeIn">
+                            <div class="article-image">
+                                <img  src="{{ asset('uploads/blog_pictures/' ~ article.photo) }}"  alt="Image de l'aricle : {{ article.title }}">
+                            </div>
+                            <div class="article-details flex">
+                                <div class="article-author-details">
+                                    <div class="article-author-picture">
+                                        {#%if article.author.profile.picture is defined %}
+                                        <img src={{ article.author.profile.picture }}  alt="image de profile de {{article.author.fullname}}">#
+                                        {#%else%}
+                                        #   <img src="/_assets/images/avatar_jstore.webp"  alt="image de profile de {{article.author.fullname}}">
+                                        {#%endif%#}
+                                    </div>
+                                </div>
+                                <div class="article-content-details">
+                                    <h2 class="article-title"> {{ article.title }} </h2>
+                                    <div class="article-createdAt"> {{ article.fromNow }} </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="article-content-details">
-                        <h2 class="article-title"> {{ article.title }} </h2>
-                        <div class="article-createdAt"> {{ article.fromNow }} </div>
-                    </div>
+                        </a>   
+                        {% endfor %}
+                    </div>        
+        </div>
+    </section>
+        <!-- ======= tender Section ======= -->
+    <section id="tender" class="tender section-bg">
+        <div class="container">
+          <div class="section-title" data-aos="fade-left">
+            <h2>appel d'offres</h2>
+            <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
+          </div>  
+          <div class="row tender-container" data-aos="fade-up" data-aos-delay="200">
+          </div>
+        </div>
+    </section><!-- End tender Section -->
+  
+  <!-- ======= Members Section ======= -->
+  <section id="team" class="team">
+    <div class="container">
+
+      <div class="row">
+        <div class="col-lg-4">
+          <div class="section-title" data-aos="fade-right">
+            <h2>Team</h2>
+            <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem.</p>
+          </div>
+        </div>
+        <div class="col-lg-8">
+
+          <div class="row">
+            {% for member in members %}
+            <div class="col-lg-6">
+              <div class="member" data-aos="zoom-in" data-aos-delay="100">
+                <div class="pic"><img <img src="{{ asset('uploads/profile_pictures/' ~ member.profilePicture) }}" class="img-fluid" alt=""></div>
+                <div class="member-info">
+                  <h4>{{ member.firstName}}</h4>
+                  <span>{{member.quality}}</span>
+                  <p>Explicabo voluptatem mollitia et repellat qui dolorum quasi</p>
+                  <div class="social">
+                    <a href=""><i class="ri-twitter-fill"></i></a>
+                    <a href=""><i class="ri-facebook-fill"></i></a>
+                    <a href=""><i class="ri-instagram-fill"></i></a>
+                    <a href=""> <i class="ri-linkedin-box-fill"></i> </a>
+                  </div>
                 </div>
-            </a>
-        {% endfor %}
+              </div>
+            </div>
+
+            {% endfor %}
+            
+
+          </div>
+
+        </div>
+      </div>
+
     </div>
+  </section><!-- End Members Section -->
+
 
 {% endblock %}

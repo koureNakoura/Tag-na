@@ -33,9 +33,6 @@ class Member
     #[ORM\Column]
     private ?\DateTimeImmutable $created_at = null;
 
-    #[ORM\OneToMany(mappedBy: 'author', targetEntity: Article::class, orphanRemoval: true)]
-    private Collection $articles;
-
     #[ORM\Column(length: 255)]
     private ?string $quality = null;
 

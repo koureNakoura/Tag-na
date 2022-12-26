@@ -1,0 +1,15 @@
+<div class="col py-3 project"
+<div class="card shadow-lg bg-light-green rounded-3 p-3 h-100">
+    <a href="#" class="text-decoration-none text-black">
+        <img  src="{{ asset('uploads/project_pictures/' ~ project.photo) }}" class="card-img-top" alt="image projet" >
+    </a>
+<div class="card-body">
+        <h4 class="card-cat " style="color: rgb(255, 115, 0);">{#{ project.projectCategory }#}</h4>
+        <h5 class="card-title fw-bold bg-light-green">{{ project.title }}</h5>
+        
+</div>
+    <div class="text-end pt-2 mt-auto">
+        <a href="#{#{ path('app_course_detail', {'slug': course.slug}) }#}" class="btn btn-success">Voir</a>
+    </div>
+</div>
+</div>

@@ -2,46 +2,51 @@
 
 namespace App\Entity;
 
+use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-//use App\Entity\Author;
 use Doctrine\ORM\Mapping as ORM;
-use App\Repository\UserRepository;
-use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-//#[ORM\InheritanceType("JOINED")]
-//#[ORM\DiscriminatorColumn(name: "discr", type: "string")]
-//#[ORM\DiscriminatorMap(["admin" => Admin::class, "author" => Author::class])]
-abstract class User implements UserInterface, PasswordAuthenticatedUserInterface
+#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
-    protected $id;
+    #[ORM\Column]
+    private ?int $id = null;
 
-    #[ORM\Column(type: 'string', length: 180, unique: true)]
-    protected $email;
+    #[ORM\Column(length: 180, unique: true)]
+    private ?string $email = null;
 
-    #[ORM\Column(type: 'json')]
-    protected $roles = [];
+    #[ORM\Column]
+    private array $roles = [];
 
-    #[ORM\Column(type: 'string')]
-    protected $password;
+    /**
+     * @var string The hashed password
+     */
+    #[ORM\Column]
+    private ?string $password = null;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Adress::class, orphanRemoval: true)]
-    private Collection $adress;
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Address::class, orphanRemoval: true)]
+    private Collection $address;
 
     #[ORM\OneToOne(inversedBy: 'user', cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
     private ?Profile $profile = null;
 
-    #[ORM\OneToMany(mappedBy: 'author', targetEntity: Article::class)]
-    private Collection $articles;
+    #[ORM\Column(type: 'boolean')]
+    private $isVerified = false;
 
-    #[ORM\Column(length: 60)]
-    private ?string $full_name = null;
+    //#[ORM\Column]
+    //private ?bool $IsVerified = null;
+
+    public function __construct()
+    {
+        $this->address = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -71,19 +76,13 @@ abstract class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @deprecated since Symfony 5.3, use getUserIdentifier instead
-     */
-    public function getUsername(): string
-    {
-        return (string) $this->email;
-    }
-
-    /**
      * @see UserInterface
      */
     public function getRoles(): array
     {
         $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
 
         return array_unique($roles);
     }
@@ -111,17 +110,6 @@ abstract class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * Returning a salt is only needed, if you are not using a modern
-     * hashing algorithm (e.g. bcrypt or sodium) in your security.yaml.
-     *
-     * @see UserInterface
-     */
-    public function getSalt(): ?string
-    {
-        return null;
-    }
-
-    /**
      * @see UserInterface
      */
     public function eraseCredentials()
@@ -130,37 +118,30 @@ abstract class User implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
-    public function __construct(array $roles)
-    {
-        $this->roles = $roles;
-        $this->adress = new ArrayCollection();
-        $this->articles = new ArrayCollection();
-    }
-
     /**
-     * @return Collection<int, Adress>
+     * @return Collection<int, Address>
      */
-    public function getAdress(): Collection
+    public function getAddress(): Collection
     {
-        return $this->adress;
+        return $this->address;
     }
 
-    public function addAdress(Adress $adress): self
+    public function addAddress(Address $address): self
     {
-        if (!$this->adress->contains($adress)) {
-            $this->adress->add($adress);
-            $adress->setUser($this);
+        if (!$this->address->contains($address)) {
+            $this->address->add($address);
+            $address->setUser($this);
         }
 
         return $this;
     }
 
-    public function removeAdress(Adress $adress): self
+    public function removeAddress(Address $address): self
     {
-        if ($this->adress->removeElement($adress)) {
+        if ($this->address->removeElement($address)) {
             // set the owning side to null (unless already changed)
-            if ($adress->getUser() === $this) {
-                $adress->setUser(null);
+            if ($address->getUser() === $this) {
+                $address->setUser(null);
             }
         }
 
@@ -172,51 +153,21 @@ abstract class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->profile;
     }
 
-    public function setProfile(Profile $profile): self
+    public function setProfile(?Profile $profile): self
     {
         $this->profile = $profile;
 
         return $this;
     }
 
-    /**
-     * @return Collection<int, Article>
-     */
-    public function getArticles(): Collection
+     public function isVerified(): bool
     {
-        return $this->articles;
+        return $this->isVerified;
     }
 
-    public function addArticle(Article $article): self
+    public function setIsVerified(bool $isVerified): self
     {
-        if (!$this->articles->contains($article)) {
-            $this->articles->add($article);
-            $article->setAuthor($this);
-        }
-
-        return $this;
-    }
-
-    public function removeArticle(Article $article): self
-    {
-        if ($this->articles->removeElement($article)) {
-            // set the owning side to null (unless already changed)
-            if ($article->getAuthor() === $this) {
-                $article->setAuthor(null);
-            }
-        }
-
-        return $this;
-    }
-
-    public function getFullName(): ?string
-    {
-        return $this->full_name;
-    }
-
-    public function setFullName(string $full_name): self
-    {
-        $this->full_name = $full_name;
+        $this->isVerified = $isVerified;
 
         return $this;
     }

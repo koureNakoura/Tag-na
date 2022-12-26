@@ -30,8 +30,8 @@ class Profile
     private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\OneToOne(mappedBy: 'profile', cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
+
 
     public function getId(): ?int
     {
@@ -103,10 +103,15 @@ class Profile
         return $this->user;
     }
 
-    public function setUser(User $user): self
+    public function setUser(?User $user): self
     {
+        // unset the owning side of the relation if necessary
+        if ($user === null && $this->user !== null) {
+            $this->user->setProfile(null);
+        }
+
         // set the owning side of the relation if necessary
-        if ($user->getProfile() !== $this) {
+        if ($user !== null && $user->getProfile() !== $this) {
             $user->setProfile($this);
         }
 
@@ -114,4 +119,7 @@ class Profile
 
         return $this;
     }
+
+
+   
 }
