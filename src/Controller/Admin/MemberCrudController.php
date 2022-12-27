@@ -33,15 +33,14 @@ class MemberCrudController extends AbstractCrudController
                 ->setUploadDir('/public/uploads/profile_pictures')
                 ->setBasePath('/uploads/profile_pictures')
                 ->setUploadedFileNamePattern('[timestamp]-[slug].[extension]'),
-                   
-            TextField::new('firstName', 'Prénom'),
-            TextField::new('lastName', 'Nom'),
+            TextField::new('full_name', 'Nom et Prénom'),       
         //   SlugField::new('slug')->setTargetFieldName('object'),
              TextField::new('email', 'Email'),
              TextField::new('phoneNumber', 'Numéro téléphone'),
              TextField::new('quality', 'Poste occupé'),
              TextField::new('faceBookProfile', 'Profile Facebook'),
              TextField::new('tweeterProfile', 'Profile Tweeter'),
+             TextField::new('linkedInProfile', 'Profile LinkedIn'),
          //   TextareaField::new('content', 'Contenu'),
          //   ->setFormType(CKEditorType::class)
                          

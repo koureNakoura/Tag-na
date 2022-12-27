@@ -32,13 +32,11 @@
         <nav>
             <ul class="nav-bar flex aic">
                 <li class="nav-item"><a href="">A propos</a></li>
-                <li class="nav-item down"><a href="#">Categories</a>
+                <li class="nav-item down"><a href="#">Projets</a>
                     <ul class="nav-bar">
-                     {#
-                        {% for category in app.session.get("categories") %}
+                        {# % for category in app.session.get("categories") %}
                         <li class="nav-item"><a href="/category/{{category.slug}}">{{ category.name}} </a>({{category.articles| length}} articles)</li>
                         {% endfor %}
-                         #}   
                        {# <li class="nav-item"><a href="">Category 2</a></li>
                         <li class="nav-item"><a href="">Category 3</a></li>#}
                     </ul>
@@ -56,6 +54,8 @@
         <div class="nav-icon">
             <i class="bi bi-card-heading"></i>
         </div>
+    </header>
+
     </header>
     {% block slider %}{% endblock %}
     <div class="container">
@@ -80,39 +80,8 @@
                     </ul>
                 </div>
                 <div class="footer-content-item flex-1 b">
-                    <h2>Formations gratuites</h2>
-                    <ul>
-                        <li>
-                            <a
-                                href="https://free.mudey.fr/programme/apprendre-les-bases-indispensables-du-langage-html-5"
-                                target="_blank">
-                                Les bases HTML 5
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                href="https://free.mudey.fr/programme/apprendre-les-bases-indispensables-du-langage-css-3"
-                                target="_blank">
-                                Les bases CSS 3</a>
-                        </li>
-                        <li>
-                            <a
-                                href="https://free.mudey.fr/programme/apprendre-les-bases-indispensables-du-langages-javascript"
-                                target="_blank">
-                                Les bases JavaScript</a>
-                        </li>
-                        <li>
-                            <a href="https://free.mudey.fr/programme/les-bases-indispensables-du-langage-php"
-                            target="_blank">
-                                Les bases PHP</a>
-                        </li>
-                        <li>
-                            <a href="https://mudey.fr/programme/formation-complete-developpeur-web-full-stack"
-                            target="_blank">
-                                Devenir Expert du Web</a>
-                        </li>
-
-                    </ul>
+                    <h2>Localisation</h2>
+                    <iframe style="border:0; width: 100%; height: 270px;" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6161.157923181774!2d2.0740277081389054!3d13.566271445675845!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x11da9f54780f4c45%3A0x73a57ba6bd549456!2sONG%20TAGGAST-NIGER!5e1!3m2!1sfr!2sne!4v1672133902627!5m2!1sfr!2sne" frameborder="0" allowfullscreen></iframe>
                 </div>
             </div>
         </div>

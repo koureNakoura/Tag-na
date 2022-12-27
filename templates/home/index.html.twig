@@ -25,7 +25,7 @@
         <div class="col-lg-4">
           <div class="section-title" data-aos="fade-right">
             <h2>domaines</h2>
-            <p>Magnam dolores commodi suscipit nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
+            <p>L'ONG Taggast-Niger-Assistance intervient dans plusieurs domaines dont entre autres:</p>
           </div>
         </div>
         <div class="col-lg-8">
@@ -116,47 +116,45 @@
     </section><!-- End tender Section -->
   
   <!-- ======= Members Section ======= -->
-  <section id="team" class="team">
+  
+    <section id="team" class="team">
     <div class="container">
 
       <div class="row">
         <div class="col-lg-4">
           <div class="section-title" data-aos="fade-right">
-            <h2>Team</h2>
+            <h2>L'équipe</h2>
             <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem.</p>
           </div>
         </div>
         <div class="col-lg-8">
-
           <div class="row">
             {% for member in members %}
             <div class="col-lg-6">
               <div class="member" data-aos="zoom-in" data-aos-delay="100">
                 <div class="pic"><img <img src="{{ asset('uploads/profile_pictures/' ~ member.profilePicture) }}" class="img-fluid" alt=""></div>
                 <div class="member-info">
-                  <h4>{{ member.firstName}}</h4>
+                  <h4>{{ member.fullname}}</h4>
                   <span>{{member.quality}}</span>
-                  <p>Explicabo voluptatem mollitia et repellat qui dolorum quasi</p>
+                  <p>{{member.description}}</p>
                   <div class="social">
-                    <a href=""><i class="ri-twitter-fill"></i></a>
-                    <a href=""><i class="ri-facebook-fill"></i></a>
-                    <a href=""><i class="ri-instagram-fill"></i></a>
-                    <a href=""> <i class="ri-linkedin-box-fill"></i> </a>
+                    <a href=""><i class="bi bi-facebook"></i></a>
+                    <a href=""><i class="bi bi-twitter"></i></a>
+                    <a href=""><i class="bi bi-instagram"></i></a>
+                    <a href=""><i class="bi bi-linkedin"></i></a>
                   </div>
                 </div>
               </div>
             </div>
 
             {% endfor %}
-            
-
+            <div class="mt-10 align-center">
+              {{ knp_pagination_render(members) }}
+               </div>
           </div>
-
         </div>
       </div>
-
     </div>
-  </section><!-- End Members Section -->
-
+  </section><!-- End Team Section -->
 
 {% endblock %}
